@@ -234,3 +234,28 @@ return (<FlatList
 路由可以理解为嵌套,全局路由变量注册在最外层路由,每个层级可以嵌套不同的局部路由
 
 ```   
+
+### 跳转带参数
+```
+跳转路由:注册路由 App.js
+跳转页面:执行方法
+            const navigateAction = NavigationActions.navigate({
+                        routeName: 'jumpeWebview',
+                        params: {
+                            toLinke: tolink,
+                        },
+                    });
+点击事件执行:
+            <TouchableOpacity onPress={() => this.props.navigation.dispatch(navigateAction)}></TouchableOpacity>
+接收执行:在构造方法中调用
+            constructor(pros) {
+                    super(pros)
+                    this.state = {
+                        tolink: this.props.navigation.state.params.toLinke,
+                    }
+                }
+使用参数:
+            <WebView source={{uri: this.state.tolink}}/>
+
+```
+

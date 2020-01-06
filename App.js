@@ -11,20 +11,32 @@ import HomeScreen from './js/HomeView';
 import Person from './js/Person';
 import BuyWebView from './js/BuyWebView'
 import Webviews from "./js/singleview/WebviewS";
+import jumpeWebview from "./js/singleview/JumpeWebview";
 import BottomTab from './js/BottomTabNavigator';
 import {createStackNavigator} from "react-navigation-stack";
+
 const App = createStackNavigator({
-    BottomTab:{screen:BottomTab,
-        navigationOptions:{
-            title:'',
-            flex:1,
+    BottomTab: {
+        screen: BottomTab,
+        navigationOptions: {
+            title: '',
+            flex: 1,
         },
     },
-    Webviews: { screen: Webviews,
-        navigationOptions:{
-            title:'Webviews',
-            flex:1,
+    Webviews: {
+        screen: Webviews,
+        navigationOptions: {
+            title: 'Webviews',
+            flex: 1,
         },
     },
+    jumpeWebview:{
+        screen:jumpeWebview,
+        navigationOptions:{
+            title:'jumpeWebview',
+            flex:1,
+        }
+    }
+
 });
 export default createAppContainer(App);

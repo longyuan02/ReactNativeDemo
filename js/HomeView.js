@@ -1,9 +1,12 @@
 /* eslint-disable */
 import React, {Component} from 'react';
-import {View, Text, Image, Dimensions, StyleSheet, SectionList} from 'react-native';
+import {View, Text, TouchableOpacity, Image, Dimensions, StyleSheet, SectionList, Alert} from 'react-native';
+import {NavigationActions, TabNavigator, StackNavigator} from 'react-navigation'
 import API from './utils/InterfaceAdress';
 import {FlatList, TouchableHighlight} from 'react-native-gesture-handler';
 import AppUtils from './AppUtils'
+
+import jumpeWebview from './singleview/JumpeWebview'
 
 export default class HomeView extends Component {
     constructor(props) {
@@ -31,6 +34,11 @@ export default class HomeView extends Component {
         this._TitleView = this._TitleView.bind(this);
         this._ImageContent = this._ImageContent.bind(this);
         // this.renderItem = this.renderItem.bind(this);
+    }
+
+    _onPressButton() {
+        // alert("click1");
+        console.log("click1");
     }
 
 //开始数据请求绑定数据
@@ -62,7 +70,7 @@ export default class HomeView extends Component {
     }
 
 //广告位置15/18
-    async fetchData_Fifth(keywords,moduleType) {
+    async fetchData_Fifth(keywords, moduleType) {
         //初始化versionName
         //成功 失败回调
         AppUtils.show(msg => {
@@ -70,11 +78,7 @@ export default class HomeView extends Component {
             },
             (x, y) => {
                 this.setState({vsersionName: x});
-
-
-
-
-                 fetch(API.FINANCE_OTHER + "?version=" + this.state.vsersionName + "&keyWord=" + keywords + "&platform=gold.app", {
+                fetch(API.FINANCE_OTHER + "?version=" + this.state.vsersionName + "&keyWord=" + keywords + "&platform=gold.app", {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
@@ -87,16 +91,21 @@ export default class HomeView extends Component {
                             this.state.dataSource.forEach((item, index) => {
                                 //模块标题
                                 var titleImage = item.titleImg;
-                                this.state.singleModule[index] = {...this.state.singleModule[index], titleImage,moduleType};
+                                this.state.singleModule[index] = {
+                                    ...this.state.singleModule[index],
+                                    titleImage,
+                                    moduleType
+                                };
                             })
-                            console.log('dataSource====11==',  this.state.dataSource);
+                            console.log('dataSource====11==', this.state.dataSource);
                             this.state.singleModule.forEach((item, index) => {
-                                var moduleType=this.state.singleModule[index].moduleType;
+                                var moduleType = this.state.singleModule[index].moduleType;
                                 var titleImg = this.state.dataSource[index].titleImg;
                                 var data = Array.from(item.bannerElements);
-                                this.state.putDataSource.push({titleImg,moduleType, data})
+                                this.state.putDataSource.push({titleImg, moduleType, data})
+                                console.log("putData=====each=", data);
                             })
-                            console.log("putData======",this.state.putDataSource);
+                            console.log("putData======", this.state.putDataSource);
                             this.setState({
                                 loaded: true,
                             })
@@ -119,36 +128,25 @@ export default class HomeView extends Component {
                     // sections={this.state.sourceData}
                 />
             </View>
+            /**
+             <View>
+             <SectionList
+
+             sections={this.state.putDataSource}
+             renderSectionHeader={this._TitleView}
+             // renderItem={this._ImageContent}
+             renderItem={({item}) =>
+                        this._ImageContent(item)}
+             // sections={this.state.sourceData}
+             />
+             </View>
+             */
         );
     }
 
     _renderItem({item}) {
         console.log("data=====", item);
         return (<View><Text>item</Text></View>);
-        // if (data.length == 2) {
-        //     return (<View>
-        //         <Text></Text>
-        //         <View style={styles.doubleImageConstaint}>
-        //         <Image style={styles.doubleImageset} source={{uri: item[0].imgUrl}}/>
-        //         <Image style={styles.doubleImageset} source={{uri: item[1].imgUrl}}/>
-        //         </View>
-        //     </View>);
-        // }else if(item.length == 1){
-        //     return (<View>
-        //         <View style={styles.doubleImageConstaint}>
-        //         <Image style={styles.doubleImageset} source={{uri: item[0].imgUrl}}/>
-        //         </View></View>);
-        // }else if(item.length == 3){
-        //     return (<View>
-        //         <View style={styles.doubleImageConstaint}>
-        //         <Image style={styles.doubleImageset} source={{uri: item[0].imgUrl}}/>
-        //         <Image style={styles.doubleImageset} source={{uri: item[1].imgUrl}}/>
-        //         <Image styl={styles.doubleImageset} source={{uri:item[2].imgUrl}}/>
-        //     </View>
-        //     </View>);
-        // }else{
-        //     return (<Text>data</Text>);
-        // }
     }
 
     /*标题*/
@@ -157,22 +155,44 @@ export default class HomeView extends Component {
         if (txt != null && txt != "") {
             return (<View>
                 <TouchableHighlight>
-                    <Image style={styles.imageTitle} source={{uri: txt}}/>
+                    <Image style={styles.imageTitle} source={{uri: txt}} onPress={() => {
+                        console.log(item);
+                    }}/>
                 </TouchableHighlight>
             </View>);
         } else {
             return null;
         }
     }
+
     /* 图片内容*/
     _ImageContent(items) {
-        // var datas = items.section.data;
-        // console.log("_image=======",datas.length);
-        return( <View style={styles.doubleImageConstaint}>
-            <Image style={styles.doubleImageset}
-                   source={{uri: items.imgUrl}}/></View>);
+        var tolink = items.tolink;
+        console.log("tolink:" + tolink);
+        const navigateAction = NavigationActions.navigate({
+            routeName: 'jumpeWebview',
+            params: {
+                toLinke: tolink,
+            },
+        });
+        if (tolink != null && tolink != "") {
+            return (<TouchableOpacity onPress={() => this.props.navigation.dispatch(navigateAction)}><View
+                style={styles.doubleImageConstaint}>
+                <Image style={styles.doubleImageset}
+                       source={{uri: items.imgUrl}}/></View></TouchableOpacity>);
+        } else {
+            return (<TouchableOpacity onPress={this._onPressButton}><View style={styles.doubleImageConstaint}
+                                                                          onPress={() => {
+                                                                              console.log("click2");
+                                                                          }
+                                                                          }>
+                <Image style={styles.doubleImageset}
+                       source={{uri: items.imgUrl}}/></View></TouchableOpacity>);
+        }
+
 
     }
+
 //两张图
 
 //秒杀
