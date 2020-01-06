@@ -16,7 +16,6 @@
 #### 在已创建的项目中安装 React Navigation
     yarn add react-navigation
 
-
 ### 项目安装依赖
     |-Expo管理的项目
     |-原生的ReactNative 项目
@@ -29,8 +28,6 @@
 使用expo安装
  expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context
 
-
-
 ### 为了支持依赖使用androidx
     yarn add --dev jetifier
     # or with npm
@@ -40,6 +37,7 @@
   "postinstall": "jetifier -r"
 }
 ```
+
 ### 手动运行 postinstall 脚本:
     yarn postinstall
     # or with npm
@@ -70,6 +68,7 @@ protected ReactActivityDelegate createReactActivityDelegate() {
 }</code></pre>
 
  
+ 
 ### final 
     Then add the following at the top of your entry file, such as index.js or App.js:
 import 'react-native-gesture-handler'
@@ -82,8 +81,7 @@ yarn add react-navigation-stack
 [说明]
 1. export default
   如果一个页面有多个class 声明export default 为唯一入口class
-
-
+  
 ### 路由基本使用
   1. this.props.navigation.navigate('RouteName') 将新路由推送到堆栈导航器，如果它尚未在堆栈中，则跳转到该页面。
   2. this.props.navigation.push('RouteName') ，并且它会继续推送路由。
@@ -256,6 +254,6 @@ return (<FlatList
                 }
 使用参数:
             <WebView source={{uri: this.state.tolink}}/>
-
 ```
+[参考地址](https://blog.csdn.net/quhongqiang/article/details/88419805)
 
