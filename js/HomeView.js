@@ -6,7 +6,8 @@ import API from './utils/InterfaceAdress';
 import {FlatList, TouchableHighlight} from 'react-native-gesture-handler';
 import AppUtils from './AppUtils'
 import Frisbee from 'frisbee'
-import FunctionView from './HomeViews/FunctionView'
+// import FunctionView from './HomeViews/FunctionView'
+import CustmerView from './component/ViewComponet'
 
 import FlexBoxTest from './HomeViews/FlexBoxTest'
 
@@ -122,7 +123,7 @@ export default class HomeView extends Component {
                 'Method': 'POST',
             }
         });
-        
+
         /* 成功 */
         // fetch('https://cnodejs.org/api/v1/topics?page=1&tab=job&limit=10', {
         //     method: 'GET',//1
@@ -191,7 +192,8 @@ export default class HomeView extends Component {
     _ListView() {
         return (
             // <FunctionView></FunctionView>
-            <FlexBoxTest></FlexBoxTest>
+            // <FlexBoxTest></FlexBoxTest>
+            <CustmerView></CustmerView>
             // <View style={{flexDirection:'column'}}>
             //     <SectionList
             //     style={{flex:1}}
@@ -358,7 +360,7 @@ getBanner(){
         this.fetchData();
         this.functionEnter();
         // this.getBanner();
-       
+
     }
 
     _View() {
@@ -453,4 +455,3 @@ var styles = StyleSheet.create({
         /> */
 }
 
-        
