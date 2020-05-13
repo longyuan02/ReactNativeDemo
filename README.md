@@ -255,5 +255,17 @@ return (<FlatList
 使用参数:
             <WebView source={{uri: this.state.tolink}}/>
 ```
+[数据格式]
+```
+            /**假设1为选择，2为取消*/
+            // sourceData: [
+            //     {key: "招牌菜-3", data: [{title: "鱼香茄子", type: 1}, {title: "酸菜鱼", type: 2}, {title: "红烧肉", type: 1}]},
+            //     {key: "凉菜-12", data: [{title: "花生米", type: 2}, {title: "黄瓜", type: 1}]},
+            //     {key: "主食-8", data: [{title: "米饭", type: 1},]},
+            // ]
+
+```
+
+
 [参考地址](https://blog.csdn.net/quhongqiang/article/details/88419805)
 

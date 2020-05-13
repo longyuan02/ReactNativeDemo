@@ -5,6 +5,8 @@ import {NavigationActions, TabNavigator, StackNavigator} from 'react-navigation'
 import API from './utils/InterfaceAdress';
 import {FlatList, TouchableHighlight} from 'react-native-gesture-handler';
 import AppUtils from './AppUtils'
+import Frisbee from 'frisbee'
+import FunctionView from './HomeViews/FunctionView'
 
 import jumpeWebview from './singleview/JumpeWebview'
 
@@ -22,12 +24,6 @@ export default class HomeView extends Component {
             objM: mainData,
             listCount: 0,
             putDataSource: [],
-            /**假设1为选择，2为取消*/
-            sourceData: [
-                {key: "招牌菜-3", data: [{title: "鱼香茄子", type: 1}, {title: "酸菜鱼", type: 2}, {title: "红烧肉", type: 1}]},
-                {key: "凉菜-12", data: [{title: "花生米", type: 2}, {title: "黄瓜", type: 1}]},
-                {key: "主食-8", data: [{title: "米饭", type: 1},]},
-            ]
         }
         this.fetchData = this.fetchData.bind(this);
         this.fetchData_Fifth = this.fetchData_Fifth.bind(this);
@@ -41,6 +37,28 @@ export default class HomeView extends Component {
         console.log("click1");
     }
 
+//// Frisbee请求测试
+// async dddd(){
+//     console.log('首页_公告====='+"==============");
+//         /**
+//     * 先抽取成全局变量
+//     * 网络工具
+//     **/
+//    const api = new Frisbee({
+//     baseURI: API.cmsUrl,
+//     headers: {
+//         'Accept': 'application/json',
+//         'Content-Type': 'application/json',
+//         'Accept-Charset': 'utf-8',
+//         'Method': 'GET',
+//     }
+// });
+//   let data = await api.get('banner/bannerListPage')
+//   data就是方法返回的数据对象，body属性就是具体的json内容
+    // console.log('首页_公告====='+"=============="+data.body);
+// }
+
+
 //开始数据请求绑定数据
     async fetchData() {
         fetch(API.REQUEST_SURL, {
@@ -50,8 +68,8 @@ export default class HomeView extends Component {
                 'Content-Type': 'application/json', //数据格式 json或者key-value形式
             },
         })
-            .then(response => response.json())
-            .then(responseData => {
+        .then(response => response.json())
+        .then(responseData => {
                 this.state.objM = JSON.stringify(responseData.responseParams.modules);
                 var datas = new Array();
                 responseData.responseParams.modules.forEach((item, index) => {
@@ -67,6 +85,58 @@ export default class HomeView extends Component {
             }).catch((error) => {
             console.error(error);
         });
+    }
+    async functionEnter(){
+        // let formData = new FormData();
+        // formData.append("channel","23");
+        // formData.append("token","4c1cf46e3fb844bc85601cf81a2cc9949A1mfb");
+        // formData.append("keyWord","HOME_GONGNENG");
+        // formData.append("version","3.4.0");
+        // fetch(API.FINANCE_BANNER_MENU,{
+        //     method:'POST',
+        //     headers:{
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        // //     body:JSON.stringify({
+        // //         channel:'23',
+        // //         token:'4c1cf46e3fb844bc85601cf81a2cc9949A1mfb',
+        // //         keyWord:'HOME_GONGNENG',
+        // //         version:'3.4.0'
+        // // })
+        // }).then(response => response)
+        // .then(responseData =>{
+        //     console.log("function======="+JSON.stringify(responseData))
+        // }).catch((error)=>{
+        //     console.error(error)
+        // })
+        let api = new Frisbee({
+            baseURI: 'https://cms-uat.gomegold.com/banner/bannerListPage',
+            // baseURI:"http://10.163.0.96:49000/",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Accept-Charset': 'utf-8',
+                'Method': 'POST',
+            }
+        });
+        
+        /* 成功 */
+        // fetch('https://cnodejs.org/api/v1/topics?page=1&tab=job&limit=10', {
+        //     method: 'GET',//1
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        // }).then((response) => response.json())
+        //     .then((jsonData) => {
+        //         // let country = jsonData.data.country;
+        //         // let city = jsonData.data.city;
+        //         console.log("---------------------------"+JSON.stringify(jsonData)+"_____")
+        //         alert("country:"+JSON.stringify(jsonData) + country + "-------city:" + city);
+        //     }).catch((error)=>{
+        //         console.log("-----------------------ee----"+error)
+        //             console.error(error)
+        //         })
     }
 
 //广告位置15/18
@@ -118,16 +188,18 @@ export default class HomeView extends Component {
 
     _ListView() {
         return (
-            <View>
-                <SectionList
-                    sections={this.state.putDataSource}
-                    renderSectionHeader={this._TitleView}
-                    // renderItem={this._ImageContent}
-                    renderItem={({item}) =>
-                        this._ImageContent(item)}
-                    // sections={this.state.sourceData}
-                />
-            </View>
+            <FunctionView></FunctionView>
+            // <View style={{flexDirection:'column'}}>
+            //     <SectionList
+            //     style={{flex:1}}
+            //         sections={this.state.putDataSource}
+            //         renderSectionHeader={this._TitleView}
+            //         // renderItem={this._ImageContent}
+            //         renderItem={({item}) =>
+            //             this._ImageContent(item)}
+            //         // sections={this.state.sourceData}
+            //     />
+            // </View>
             /**
              <View>
              <SectionList
@@ -220,6 +292,7 @@ export default class HomeView extends Component {
 //    body:  JSON.stringify({recommendOwnPage:type})
 //   }).then(response => response.json())
 //        .then(responseData => {
+//         console.log('guessYouLike======'+response);
 //         this.state.dataSource[index].push(responseData.responseParams.modules);
 //        }).catch((error) => {
 //          console.error(error);
@@ -240,8 +313,34 @@ export default class HomeView extends Component {
 //          console.error(error);
 //        });
 // }
+//banner
+getBanner(){
+    console.log('getBanner===start')
+    fetch(API.HOME_GOLDINVESTMENT,{
+        method:'POST',
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json', //数据格式 json或者key-value形式
+        },
+        body:  JSON.stringify({
+            keyWord:'HOME_GONGNENG',
+            version:'3.4.0',
+            Cookie:'sessionId=4c1cf46e3fb844bc85601cf81a2cc9949A1mfb',
+            channel:'23',
+            channelId:'23',
+            token:'4c1cf46e3fb844bc85601cf81a2cc9949A1mfb',
+    })
+    }).then(response => response)
+    .then(responseData => {
+        console.log("ddd======"+JSON.stringify(responseData.responseParams))
+    //  this.state.dataSource[index].push(responseData.responseParams.modules);
+    }).catch((error) => {
+      console.error(error);
+    });
+}
 
     render() {
+        // <FunctionView></FunctionView>
         if (!this.state.loaded) {
             return this.renderLoadingView();
         } else {
@@ -254,6 +353,9 @@ export default class HomeView extends Component {
         this.viewDidAppear = this.props.navigation.addListener('didFocus', obj => {
         });
         this.fetchData();
+        this.functionEnter();
+        // this.getBanner();
+       
     }
 
     _View() {
