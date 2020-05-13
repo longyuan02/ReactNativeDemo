@@ -266,6 +266,24 @@ return (<FlatList
 
 ```
 
+##### flexBox布局
+flexDirection 'row','colum'
+justifyContent 
+```
+子元素在靠近主轴排列方式
+flex-start、center、flex-end、space-around、space-between以及space-evenly
+```
+alignItem
+```
+子元素在次轴的排列方式
+flex-start、center、flex-end以及stretch
+```
+alignSelf
+```
+用法与alignItem相同
+使用场景:重置父布局的alignItem设置
+```
 
+## 参考地址
 [参考地址](https://blog.csdn.net/quhongqiang/article/details/88419805)
 
