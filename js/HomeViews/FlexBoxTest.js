@@ -10,7 +10,7 @@ export default class FlexBoxTest extends Component{
     // return this.alignContent()
     return this.flexBase();
     }
-    // Flex Direction 默认纵轴排列 
+    // Flex Direction 默认纵轴排列
     direction(){
         return(
             // 尝试把`flexDirection`改为`column`看看
@@ -95,7 +95,7 @@ export default class FlexBoxTest extends Component{
                 <Text numberOfLines={1} style={{flexShrink: 1,width:100,height:100,backgroundColor:'#FFFF00'}}>758.</Text>
                 <Text numberOfLines={1} style={{flexGrow: 1,  width:'auto',height:100,backgroundColor:'#F0F000'}}>23</Text>
             </View>
-            
+
         )
      }
     //  弹性基础，成长和收缩,标题的内容是可收缩的,如果容器宽度不够,标题就会缩减内容
@@ -104,7 +104,7 @@ export default class FlexBoxTest extends Component{
                 <View style={{
                 height: 50,
                 marginTop: 30,
-                width:500,
+                width:600,
                 flexDirection: 'row',
                 borderWidth: 2,
                 borderColor: "#ff0000"
