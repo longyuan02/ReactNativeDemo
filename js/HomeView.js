@@ -8,6 +8,8 @@ import AppUtils from './AppUtils'
 import Frisbee from 'frisbee'
 import FunctionView from './HomeViews/FunctionView'
 
+import FlexBoxTest from './HomeViews/FlexBoxTest'
+
 import jumpeWebview from './singleview/JumpeWebview'
 
 export default class HomeView extends Component {
@@ -188,7 +190,8 @@ export default class HomeView extends Component {
 
     _ListView() {
         return (
-            <FunctionView></FunctionView>
+            // <FunctionView></FunctionView>
+            <FlexBoxTest></FlexBoxTest>
             // <View style={{flexDirection:'column'}}>
             //     <SectionList
             //     style={{flex:1}}
